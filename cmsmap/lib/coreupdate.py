@@ -1,5 +1,8 @@
 #! /usr/bin/env python3
-import os, sys, re, subprocess
+import os
+import re
+import subprocess
+import sys
 
 from .initialize import initializer
 from .report import report
@@ -53,7 +56,7 @@ class CoreUpdate:
         if not self.ospath + ".git":
             msg = "Git Repository Not Found. Please download the latest version of CMSmap from GitHub repository"
             report.error(msg)
-            msg = "Example: git clone https://github.com/Dionach/cmsmap"
+            msg = "Example: git clone https://github.com/makikvues/CMSmap"
             report.error(msg)
         else:
             msg = "Updating CMSmap to the latest version from GitHub repository... "
@@ -67,7 +70,7 @@ class CoreUpdate:
         else:
             msg = " Updated could not be completed. Please download the latest version of CMSmap from GitHub repository"
             report.error(msg)
-            msg = " Example: git clone https://github.com/Dionach/cmsmap"
+            msg = " Example: git clone https://github.com/makikvues/CMSmap"
             report.error(msg)
 
     # Run sort-uniq on the plugins files
@@ -98,12 +101,11 @@ class CoreUpdate:
                     report.message(msg)
                     msg = "Would you like to update it?"
                     report.message(msg)
-                    if not initializer.default:
-                        if input("[y/N]: ").lower().startswith('y'):
-                            process = os.system("git -C " + self.edbpath + " pull")
-                            self.UpdateCMSVersions()
-                            self.UpdateLocalPlugins()
-                            self.UpdateTmpCMS()
+                    if initializer.updateExploitDbAndPlugins:
+                        process = os.system("git -C " + self.edbpath + " pull")
+                        self.UpdateCMSVersions()
+                        self.UpdateLocalPlugins()
+                        self.UpdateTmpCMS()
             else:
                 msg = "ExploitDB Git repository was not found"
                 report.error(msg)
@@ -126,12 +128,11 @@ class CoreUpdate:
                     report.message(msg)
                     msg = "Would you like to update it?"
                     report.message(msg)
-                    if not initializer.default:
-                        if input("[y/N]: ").lower().startswith('y'):
-                            process = os.system("apt-get install exploitdb")
-                            self.UpdateCMSVersions()
-                            self.UpdateLocalPlugins()
-                            self.UpdateTmpCMS()
+                    if initializer.updateExploitDbAndPlugins:
+                        process = os.system("apt-get install exploitdb")
+                        self.UpdateCMSVersions()
+                        self.UpdateLocalPlugins()
+                        self.UpdateTmpCMS()
             else:
                 msg = "ExploitDB APT path was not found"
                 report.error(msg)
@@ -145,10 +146,10 @@ class CoreUpdate:
             report.error(msg)
             msg = "Would you like to clone the ExploitDB GIT repository now?"
             report.message(msg)
-            if input("[y/N]: ").lower().startswith('y'):
+            if not initializer.dontCloneExploitDb:
                 msg = "Where would you like to save it?"
                 report.message(msg)
-                answer = input("Default: /opt/exploit-database: ")
+                answer = initializer.exploitDbPath
                 if not answer.strip():
                     self.edbpath = "/opt/exploit-database"
                     self.edbtype = "git"

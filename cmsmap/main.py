@@ -1,17 +1,24 @@
 #!/usr/bin/python3
-import os, sys, time, datetime, signal, socket, argparse, urllib
-
-from urllib.parse import urlparse
+import argparse
+import datetime
+import os
+import signal
+import socket
+import sys
+import time
+import urllib
 from argparse import RawTextHelpFormatter
-from .version import __version__
-from .lib.initialize import initializer
+from urllib.parse import urlparse
+
 from .lib.bruteforcer import bruter
-from .lib.scanner import scanner
+from .lib.coreupdate import updater
 from .lib.exploitdbsearch import searcher
 from .lib.genericchecks import genericchecker
-from .lib.report import report
-from .lib.coreupdate import updater
+from .lib.initialize import initializer
 from .lib.postexploit import postexploiter
+from .lib.report import report
+from .lib.scanner import scanner
+from .version import __version__
 
 
 def main():
@@ -66,6 +73,11 @@ def main():
             argsothers.add_argument("-h", "--help", help="show this help message and exit",action="help")
             argsothers.add_argument("-D", "--default", help="run CMSmap with default options", action="store_true", default=False)
             argsothers.add_argument("-U", "--update", help="use (C)MSmap, (P)lugins or (PC) for both", metavar= "")
+            argsothers.add_argument("-e", "--enumDefaultFiles", help="enumerate default files", metavar= "", default=False)
+            argsothers.add_argument("-X", "--dontCloneExploitDb", help="don't clone exploit DB", metavar= "", default=False)
+            argsothers.add_argument("-P", "--exploitDbPath", help="exploit DB path", metavar= "")
+            argsothers.add_argument("-A", "--updateExploitDbAndPlugins", help="update exploit DB and plugins", metavar= "")
+
             args = parser.parse_args()
         except:
             sys.exit(1)
@@ -89,6 +101,10 @@ def main():
     initializer.disableCleanURLs = args.nocleanurls
     initializer.nosslcheck = args.nosslcheck
     initializer.default = args.default
+    initializer.enumDefaultFiles = args.enumDefaultFiles
+    initializer.dontCloneExploitDb = args.dontCloneExploitDb
+    initializer.exploitDbPath = args.exploitDbPath
+    initializer.updateExploitDbAndPlugins = args.updateExploitDbAndPlugins
     scanner.file = args.input
     scanner.force = args.force
     bruter.wpnoxmlrpc = args.noxmlrpc

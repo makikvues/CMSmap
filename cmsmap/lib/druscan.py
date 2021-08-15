@@ -111,19 +111,19 @@ class DruScan:
         report.message(msg)
         msg = "Would you like to list them all?"
         report.message(msg)
-        if not initializer.default:
-            if input("[y/N]: ").lower().startswith('y'):
-                # Check for default files
-                for r, file in enumerate(self.defaultFiles):
-                    requester.request(self.url + file, data=None)
-                    sys.stdout.write("\r" + str(int(100 * int(r + 1) / len(self.defaultFiles))) + "%")
-                    sys.stdout.flush()
-                    if requester.status_code == 200 and len(requester.htmltext) not in self.notValidLen:
-                        self.defFilesFound.append(self.url + file)
-                sys.stdout.write("\r")
-                for file in self.defFilesFound:
-                    msg = file
-                    report.info(msg)
+
+        if initializer.enumDefaultFiles:
+            # Check for default files
+            for r, file in enumerate(self.defaultFiles):
+                requester.request(self.url + file, data=None)
+                sys.stdout.write("\r" + str(int(100 * int(r + 1) / len(self.defaultFiles))) + "%")
+                sys.stdout.flush()
+                if requester.status_code == 200 and len(requester.htmltext) not in self.notValidLen:
+                    self.defFilesFound.append(self.url + file)
+            sys.stdout.write("\r")
+            for file in self.defFilesFound:
+                msg = file
+                report.info(msg)
 
     # Find Drupal users via the View Module
     def DruViews(self):

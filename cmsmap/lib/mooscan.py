@@ -1,15 +1,17 @@
 #! /usr/bin/env python3
-import sys, re, hashlib, subprocess, os
+import hashlib
+import os
+import re
+import subprocess
+import sys
 
+from .bruteforcer import bruter
+from .exploitdbsearch import searcher
+from .genericchecks import genericchecker
 # Import Objects
 from .initialize import initializer
 from .report import report
-from .exploitdbsearch import searcher
-from .genericchecks import genericchecker
-from .bruteforcer import bruter
 from .requester import requester
-
-
 # Import Class
 from .threadscanner import ThreadScanner
 
@@ -67,19 +69,19 @@ class MooScan:
         report.message(msg)
         msg = "Would you like to list them all?"
         report.message(msg)
-        if not initializer.default:
-            if input("[y/N]: ").lower().startswith('y'):
-                # Check for default files
-                for r, file in enumerate(self.defaultFiles):
-                    requester.request(self.url + file, data=None)
-                    sys.stdout.write("\r" + str(int(100 * int(r + 1) / len(self.defaultFiles))) + "%")
-                    sys.stdout.flush()
-                    if requester.status_code == 200 and len(requester.htmltext) not in self.notValidLen:
-                        self.defFilesFound.append(file)
-                sys.stdout.write("\r")
-                for file in self.defFilesFound:
-                    msg = self.url + file
-                    report.info(msg)
+
+        if initializer.enumDefaultFiles:
+            # Check for default files
+            for r, file in enumerate(self.defaultFiles):
+                requester.request(self.url + file, data=None)
+                sys.stdout.write("\r" + str(int(100 * int(r + 1) / len(self.defaultFiles))) + "%")
+                sys.stdout.flush()
+                if requester.status_code == 200 and len(requester.htmltext) not in self.notValidLen:
+                    self.defFilesFound.append(file)
+            sys.stdout.write("\r")
+            for file in self.defFilesFound:
+                msg = self.url + file
+                report.info(msg)
     
     # Find Moodle version 
     def MooVersion(self):

@@ -18,7 +18,7 @@ Installation
 =====
 You can download the latest version of CMSmap by cloning the GitHub repository:
 
-     git clone https://github.com/Dionach/CMSmap
+     git clone https://github.com/makikvues/CMSmap
 
 Then you need to configure the `edbtype` and `edbpath` settings in the `cmsmap.conf`. Use `GIT` if you have a local Git repository of Exploit-db :
 
@@ -52,35 +52,38 @@ Usage
     Author: Mike Manzotti
     
     Scan:
-      target                target URL (e.g. 'https://example.com:8080/')
-      -f W/J/D, --force W/J/D
-                            force scan (W)ordpress, (J)oomla or (D)rupal
-      -F, --fullscan        full scan using large plugin lists. False positives and slow!
-      -t , --threads        number of threads (Default 5)
-      -a , --agent          set custom user-agent
-      -H , --header         add custom header (e.g. 'Authorization: Basic ABCD...')
-      -i , --input          scan multiple targets listed in a given file
-      -o , --output         save output in a file
-      -E, --noedb           enumerate plugins without searching exploits
-      -c, --nocleanurls     disable clean urls for Drupal only
-      -s, --nosslcheck      don't validate the server's certificate
-      -d, --dictattack      run low intense dictionary attack during scanning (5 attempts per user)
+      target                    target URL (e.g. 'https://example.com:8080/')
+      -f W/J/D, --force W/J/D   force scan (W)ordpress, (J)oomla or (D)rupal
+      -F, --fullscan            full scan using large plugin lists. False positives and slow!
+      -t , --threads            number of threads (Default 5)
+      -a , --agent              set custom user-agent
+      -H , --header             add custom header (e.g. 'Authorization: Basic ABCD...')
+      -i , --input              scan multiple targets listed in a given file
+      -o , --output             save output in a file
+      -E, --noedb               enumerate plugins without searching exploits
+      -c, --nocleanurls         disable clean urls for Drupal only
+      -s, --nosslcheck          don't validate the server's certificate
+      -d, --dictattack          run low intense dictionary attack during scanning (5 attempts per user)
     
     Brute-Force:
-      -u , --usr            username or username file
-      -p , --psw            password or password file
-      -x, --noxmlrpc        brute forcing WordPress without XML-RPC
+      -u , --usr                username or username file
+      -p , --psw                password or password file
+      -x, --noxmlrpc            brute forcing WordPress without XML-RPC
     
     Post Exploitation:
-      -k , --crack          password hashes file (Require hashcat installed. For WordPress and Joomla only)
-      -w , --wordlist       wordlist file
+      -k , --crack              password hashes file (Require hashcat installed. For WordPress and Joomla only)
+      -w , --wordlist           wordlist file
     
     Others:
-      -v, --verbose         verbose mode (Default false)
-      -h, --help            show this help message and exit
-      -D, --default         rum CMSmap with default options
-      -U, --update          use (C)MSmap, (P)lugins or (PC) for both
-    
+      -v, --verbose                       verbose mode (Default false)
+      -h, --help                          show this help message and exit
+      -D, --default                       rum CMSmap with default options
+      -U, --update                        use (C)MSmap, (P)lugins or (PC) for both
+      -e, --enumDefaultFiles              enumerate default files
+      -X  --dontCloneExploitDb            don't clone exploit DB
+      -P  --exploitDbPath                 exploit DB path
+      -A  --updateExploitDbAndPlugins     update exploit DB and plugins
+
     Examples:
       cmsmap.py https://example.com
       cmsmap.py https://example.com -f W -F --noedb -d

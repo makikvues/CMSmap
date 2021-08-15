@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
-import os, configparser
+import configparser
+import os
+
 
 class Initialize:
 
@@ -21,6 +23,10 @@ class Initialize:
         self.threads = 5
         self.forceCMSmapUpdateType = None
         self.forceCMSmapUpdate = False
+        self.enumDefaultFiles = False
+        self.dontCloneExploitDb = False
+        self.updateExploitDbAndPlugins = False
+        self.exploitDbPath = ""
         self.weakpsw = ['password', 'admin', '123456', 'Password1']
         self.config = configparser.ConfigParser()
         self.config.read(os.path.join(self.cmsmapPath, "cmsmap.conf"))
