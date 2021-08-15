@@ -144,7 +144,7 @@ class CoreUpdate:
         else:
             msg = "ExploitDB GIT or APT settings not found"
             report.error(msg)
-            msg = "Would you like to clone the ExploitDB GIT repository now?"
+            msg = f"Would you like to clone the ExploitDB GIT repository now? [{not initializer.dontCloneExploitDb}]"
             report.message(msg)
             if not initializer.dontCloneExploitDb:
                 msg = "Where would you like to save it?"

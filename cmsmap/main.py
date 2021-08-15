@@ -73,10 +73,10 @@ def main():
             argsothers.add_argument("-h", "--help", help="show this help message and exit",action="help")
             argsothers.add_argument("-D", "--default", help="run CMSmap with default options", action="store_true", default=False)
             argsothers.add_argument("-U", "--update", help="use (C)MSmap, (P)lugins or (PC) for both", metavar= "")
-            argsothers.add_argument("-e", "--enumDefaultFiles", help="enumerate default files", metavar= "", default=False)
-            argsothers.add_argument("-X", "--dontCloneExploitDb", help="don't clone exploit DB", metavar= "", default=False)
+            argsothers.add_argument("-e", "--enumDefaultFiles", help="enumerate default files", action='store_true', default=False)
+            argsothers.add_argument("-X", "--dontCloneExploitDb", help="don't clone exploit DB", action='store_true', default=False)
             argsothers.add_argument("-P", "--exploitDbPath", help="exploit DB path", metavar= "")
-            argsothers.add_argument("-A", "--updateExploitDbAndPlugins", help="update exploit DB and plugins", metavar= "")
+            argsothers.add_argument("-A", "--updateExploitDbAndPlugins", help="update exploit DB and plugins", action='store_true',default=False)
 
             args = parser.parse_args()
         except:
@@ -178,6 +178,11 @@ def main():
                 msg = str(e)
                 report.error(msg)
     else:
+        if args.target is None:
+            msg = "No target specified, exiting."
+            report.status(msg)
+            exit()
+
         if args.target.endswith("/"):
             args.target = args.target[:-1]
         try:

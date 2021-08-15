@@ -1,14 +1,16 @@
 #! /usr/bin/env python3
-import sys, re, queue, time
+import queue
+import re
+import sys
+import time
 
+from .bruteforcer import bruter
+from .exploitdbsearch import searcher
+from .genericchecks import genericchecker
 # Import Objects
 from .initialize import initializer
 from .report import report
-from .exploitdbsearch import searcher
-from .bruteforcer import bruter
-from .genericchecks import genericchecker
 from .requester import requester
-
 # Import Class
 from .threadscanner import ThreadScanner
 
@@ -109,7 +111,7 @@ class DruScan:
         report.message(msg)
         msg = "Drupal is likely to have a large number of default files"
         report.message(msg)
-        msg = "Would you like to list them all?"
+        msg = f"Would you like to list them all? [{initializer.enumDefaultFiles}]"
         report.message(msg)
 
         if initializer.enumDefaultFiles:

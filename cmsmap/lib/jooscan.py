@@ -122,7 +122,7 @@ class JooScan:
         report.message(msg)
         msg = "Joomla is likely to have a large number of default files"
         report.message(msg)
-        msg = "Would you like to list them all?"
+        msg = f"Would you like to list them all? [{initializer.enumDefaultFiles}]"
         report.message(msg)
 
         if initializer.enumDefaultFiles:
